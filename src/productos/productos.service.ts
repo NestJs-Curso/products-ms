@@ -1,9 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
+import { PrismaClient } from 'generated/prisma';
 
 @Injectable()
-export class ProductosService {
+export class ProductosService extends PrismaClient implements OnModuleInit {
+  //Los mensajes de Error como los muestra por defaul NEST.
+  private readonly logger = new Logger('ProductsService');
+
+  onModuleInit() {
+    this.$connect();
+    this.logger.log('Conected');
+  }
   create(createProductoDto: CreateProductoDto) {
     return 'This action adds a new producto';
   }
