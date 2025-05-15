@@ -29,7 +29,7 @@ export class ProductosController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productosService.findOne(id);
+    return this.productosService.findOne(+id);
   }
 
   @Patch(':id')
