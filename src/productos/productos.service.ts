@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit, Query } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
 import { PrismaClient } from 'generated/prisma';
@@ -6,11 +6,11 @@ import { PaginationDto } from 'src/common';
 
 @Injectable()
 export class ProductosService extends PrismaClient implements OnModuleInit {
-  //Los mensajes de Error como los muestra por defaul NEST.
+  //* Los mensajes de Error como los muestra por defaul NestJs.
   private readonly logger = new Logger('ProductsService');
 
   onModuleInit() {
-    this.$connect();
+    void this.$connect();
     this.logger.log('Conected');
   }
   create(createProductoDto: CreateProductoDto) {
@@ -37,8 +37,11 @@ export class ProductosService extends PrismaClient implements OnModuleInit {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} producto`;
+  async findOne(id: string) {
+    const producto = await this.product.findFirst({
+      where: { id: Number(id) },
+    });
+    return producto;
   }
 
   update(id: number, updateProductoDto: UpdateProductoDto) {

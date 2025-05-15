@@ -1,1 +1,1 @@
-export * from './dto/pagination.dto';
+export { PaginationDto } from './dto/pagination.dto';
