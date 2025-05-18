@@ -18,6 +18,9 @@ model Product {
   id         Int      @id @default(autoincrement())
   name       String
   price      Float
+  available  Boolean  @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@index([available])
 }
